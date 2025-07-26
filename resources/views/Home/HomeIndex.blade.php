@@ -39,7 +39,7 @@
                     <details>
                         <summary>Servicios</summary>
                         <ul class="p-2 bg-base-100">
-                            <li><a href="/citas">Citas</a></li>
+                            <li><a href="{{ route('citas.index') }}">Citas</a></li>
                             <li><a href="/asistencias">Asistencias</a></li>
                         </ul>
                     </details>

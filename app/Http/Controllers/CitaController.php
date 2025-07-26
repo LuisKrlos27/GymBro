@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cita;
+use App\Models\Cliente;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
 
 class CitaController extends Controller
@@ -12,7 +14,11 @@ class CitaController extends Controller
      */
     public function index()
     {
-        //
+        $cita = Cita::all();
+        $cliente = Cliente::all();
+        $empleado = Empleado::all();
+
+        return view('Citas.CitasIndex', compact('cita','cliente','empleado'));
     }
 
     /**
@@ -20,7 +26,15 @@ class CitaController extends Controller
      */
     public function create()
     {
-        //
+        $cita = Cita::all();
+        $cliente = Cliente::all();
+        $empleado = Empleado::whereHas('rol', function ($query) {
+            $query->where('nombre', 'Nutricionista');
+        })->get();
+
+
+        return view('Citas.CitasForm', compact('cita','cliente','empleado'));
+
     }
 
     /**
@@ -28,7 +42,15 @@ class CitaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $validated = $request->validate([
+            'cliente_id'=>'required|exists:clientes,id',
+            'empleado_id'=>'required|exists:empleados,id',
+            'fecha'=>'date',
+            'descripcion'=>'string|max:100',
+        ]);
+        Cita::create($validated);
+        return redirect()->route('citas.index')->with('success','Cita registrada correctamente.');
     }
 
     /**
@@ -44,7 +66,11 @@ class CitaController extends Controller
      */
     public function edit(Cita $cita)
     {
-        //
+        $cliente = Cliente::all();
+        $empleado = Empleado::all();
+
+        return view('Citas.CitasEdit', compact('cita','cliente','empleado'));
+
     }
 
     /**
@@ -52,7 +78,15 @@ class CitaController extends Controller
      */
     public function update(Request $request, Cita $cita)
     {
-        //
+        $validated = $request->validate([
+            'cliente_id'=>'required|exists:clientes,id',
+            'empleado_id'=>'required|exists:empleados,id',
+            'fecha'=>'date',
+            'descripcion'=>'string|max:100',
+        ]);
+        $cita->update($validated);
+        return redirect()->route('citas.index')->with('success','Cita actualizada correctamente.');
+
     }
 
     /**
@@ -60,6 +94,8 @@ class CitaController extends Controller
      */
     public function destroy(Cita $cita)
     {
-        //
+        $cita->delete();
+        return redirect()->route('citas.index')->with('success','Cita eliminada correctamente.');
+
     }
 }
