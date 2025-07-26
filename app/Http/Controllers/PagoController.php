@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pago;
+use App\Models\Plan;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
@@ -12,7 +14,11 @@ class PagoController extends Controller
      */
     public function index()
     {
-        //
+        $pago = Pago::all();
+        $cliente = Cliente::all();
+
+        return view('Pagos.PagosIndex', compact('pago','cliente'));
+
     }
 
     /**
@@ -20,7 +26,12 @@ class PagoController extends Controller
      */
     public function create()
     {
-        //
+        $pago = Pago::all();
+        $plan = Plan::all();
+        $cliente = Cliente::all();
+
+        return view('Pagos.PagosForm', compact('pago','plan','cliente'));
+
     }
 
     /**
@@ -28,7 +39,16 @@ class PagoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $validated = $request->validate([
+            'cliente_id'=>'required|exists:clientes,id',
+            'plan_id'=>'required|exists:planes,id',
+            'fecha_pago'=>'date',
+            'estado'=>'required|boolean'
+        ]);
+        Plan::create($validated);
+        return redirect()->route('pagos.index')->with('success','Pago registrado correctamente.');
+
     }
 
     /**
@@ -44,7 +64,11 @@ class PagoController extends Controller
      */
     public function edit(Pago $pago)
     {
-        //
+        $plan = Plan::all();
+        $cliente = Cliente::all();
+
+        return view('Pagos.PagosEdit', compact('plan','pago','cliente'));
+
     }
 
     /**
@@ -52,7 +76,9 @@ class PagoController extends Controller
      */
     public function update(Request $request, Pago $pago)
     {
-        //
+
+
+        return redirect()->route('pagos.index')->with('success','Pago actualizado correctamente.');
     }
 
     /**
@@ -60,6 +86,9 @@ class PagoController extends Controller
      */
     public function destroy(Pago $pago)
     {
-        //
+        $pago->delete();
+
+        return redirect()->route('pagos.index')->with('success','Pago eliminado correctamente.');
+
     }
 }

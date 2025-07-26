@@ -49,7 +49,7 @@
                     <details>
                         <summary>Finanzas</summary>
                         <ul class="p-2 bg-base-100">
-                            <li><a href="/pagos">Pagos</a></li>
+                            <li><a href="{{ route('pagos.index') }}">Pagos</a></li>
                             <li><a href="/ventas">Ventas</a></li>
                         </ul>
                     </details>

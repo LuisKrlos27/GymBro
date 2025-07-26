@@ -6,5 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pago extends Model
 {
-    //
+    protected $table = "pagos";
+    protected $fillable = [
+        'cliente_id',
+        'plan_id',
+        'fecha_pago',
+        'estado',
+    ];
+
+    // Relación con Cliente
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+
+    // Relación con Plan
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
 }
