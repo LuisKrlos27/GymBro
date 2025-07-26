@@ -12,7 +12,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $cliente = Cliente::all();
+        return view('Clientes.ClientesIndex', compact('cliente'));
     }
 
     /**
@@ -20,7 +21,8 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        $cliente = Cliente::all();
+        return view('Clientes.ClientesForm', compact('cliente'));
     }
 
     /**
@@ -28,7 +30,15 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre'=>'string|max:50',
+            'cedula'=>'numeric|unique:clientes,cedula',
+            'edad'=>'integer',
+            'celular'=>'integer'
+        ]);
+        Cliente::create($validated);
+        return redirect()->route('clientes.index')->with('success','Clientes registrado correctamente.');
+
     }
 
     /**
@@ -44,7 +54,7 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
+        return view('Clientes.ClientesEdit', compact('cliente'));
     }
 
     /**
@@ -52,7 +62,17 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        //dd($request);
+
+        $validated = $request->validate([
+            'nombre'=>'string|max:50',
+            'cedula'=>'numeric|unique:clientes,cedula,' . $cliente->id,
+            'edad'=>'integer',
+            'celular'=>'integer'
+        ]);
+        $cliente->update($validated);
+        return redirect()->route('clientes.index')->with('success','Clientes registrado correctamente.');
+
     }
 
     /**
@@ -60,6 +80,8 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente->delete();
+        return redirect()->route('clientes.index')->with('success','Clientes eliminado correctamente.');
+
     }
 }

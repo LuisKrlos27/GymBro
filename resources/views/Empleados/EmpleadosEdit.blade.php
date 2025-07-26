@@ -17,7 +17,7 @@
         </div>
     @endif
     <div class="max-w-2xl mx-auto mt-10 bg-base-100 p-6 rounded shadow">
-        <h2 class="text-2xl text-center font-bold mb-6">EDITAR DE EMPLEADO</h2>
+        <h2 class="text-2xl text-center font-bold mb-6">EDITAR EMPLEADO</h2>
         <form action="{{ route('empleados.update', $empleado) }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @csrf
             @method('PUT')
