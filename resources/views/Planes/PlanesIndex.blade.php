@@ -17,11 +17,11 @@
         </div>
     @endif
     <div class="relative mb-4">
-        <h2 class="text-xl font-bold text-center">PAGO</h2>
+        <h2 class="text-xl font-bold text-center">PLANES</h2>
     </div>
 
     <div class="flex justify-end mb-4">
-        <a href="{{ route('pagos.create') }}" class="btn btn-success">REGISTRAR</a>
+        <a href="{{ route('planes.create') }}" class="btn btn-success">REGISTRAR</a>
     </div>
 
     <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -30,31 +30,22 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Cliente</th>
-                <th>Plan</th>
-                <th>Fecha</th>
-                <th>Estado</th>
+                <th>Nombre</th>
+                <th>Dias</th>
+                <th>Precio</th>
                 <th>Opciones</th>
             </tr>
             </thead>
             <tbody>
-                @foreach ($pago as $pag)
+                @foreach ($plan as $pla)
                     <tr>
-                        <th>{{ $pag->id }}</th>
-                        <td>{{ $pag->cliente->nombre }}</td>
-                        <td>{{ $pag->plan->nombre }}</td>
-                        <td>{{ $pag->fecha_pago }}</td>
-                        <td>
-                            @if ($pag->estado)
-                                <span class="badge badge-success">Activo</span>
-                            @else
-                                <span class="badge badge-error">Inactivo</span>
-                            @endif
-                        </td>
-
+                        <th>{{ $pla->id }}</th>
+                        <td>{{ $pla->nombre }}</td>
+                        <td>{{ $pla->duracion_dias }}</td>
+                        <td>{{ $pla->precio }}</td>
                         <td class="flex flex-col sm:flex-row gap-1">
-                            <a href="{{ route('pagos.edit', $pag->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <form action="{{ route('pagos.destroy', $pag->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este pago.?')">
+                            <a href="{{ route('planes.edit', $pla->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                            <form action="{{ route('planes.destroy', $pla->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este plan?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-error" type="submit">Eliminar</button>

@@ -12,7 +12,9 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        $plan = Plan::all();
+
+        return view('Planes.PlanesIndex', compact('plan'));
     }
 
     /**
@@ -20,7 +22,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        //
+        return view('Planes.PlanesForm');
     }
 
     /**
@@ -28,8 +30,18 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $validated = $request->validate([
+            'nombre'=>'required|string|max:50',
+            'duracion_dias'=>'required|integer',
+            'precio'=>'required|numeric'
+        ]);
+
+        Plan::create($validated);
+
+        return redirect()->route('planes.index')->with('success','Plan registrado correctamente.');
     }
+
 
     /**
      * Display the specified resource.

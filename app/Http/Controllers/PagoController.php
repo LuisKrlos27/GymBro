@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Pago;
 use App\Models\Plan;
 use App\Models\Cliente;
@@ -39,16 +40,21 @@ class PagoController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         $validated = $request->validate([
-            'cliente_id'=>'required|exists:clientes,id',
-            'plan_id'=>'required|exists:planes,id',
-            'fecha_pago'=>'date',
-            'estado'=>'required|boolean'
+            'cliente_id' => 'required|exists:clientes,id',
+            'plan_id' => 'required|exists:planes,id',
+            'fecha_pago' => 'required|date',
+            'valor_total' => 'required|numeric',
+            'valor_pagado' => 'required|numeric|gte:valor_total',
+            'estado' => 'required|boolean',
         ]);
-        Plan::create($validated);
-        return redirect()->route('pagos.index')->with('success','Pago registrado correctamente.');
 
+        $validated['cambio'] = $validated['valor_pagado'] - $validated['valor_total'];
+        $validated['hora_pago'] = Carbon::now()->format('H:i:s'); // hora actual en formato HH:MM:SS
+
+        Pago::create($validated);
+
+        return redirect()->route('pagos.index')->with('success', 'Pago registrado correctamente.');
     }
 
     /**
@@ -77,6 +83,19 @@ class PagoController extends Controller
     public function update(Request $request, Pago $pago)
     {
 
+        $validated = $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'plan_id' => 'required|exists:planes,id',
+            'fecha_pago' => 'required|date',
+            'valor_total' => 'required|numeric',
+            'valor_pagado' => 'required|numeric|gte:valor_total',
+            'estado' => 'required|boolean',
+        ]);
+
+        $validated['cambio'] = $validated['valor_pagado'] - $validated['valor_total'];
+        $validated['hora_pago'] = Carbon::now()->format('H:i:s'); // hora actual en formato HH:MM:SS
+
+        $pago->update($validated);
 
         return redirect()->route('pagos.index')->with('success','Pago actualizado correctamente.');
     }

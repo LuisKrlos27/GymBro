@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="cupcake">
+<html lang="en" data-theme="corporate">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,10 +27,11 @@
             <ul class="menu menu-horizontal px-1">
                 <li tabindex="0">
                     <details>
-                        <summary>Gestión</summary>
+                        <summary>Personas</summary>
                         <ul class="p-2 bg-base-100">
                             <li><a href="{{ route('clientes.index') }}">Clientes</a></li>
                             <li><a href="{{ route('empleados.index') }}">Empleados</a></li>
+                            <li><a href="/ventas">Roles</a></li>
                         </ul>
                     </details>
                 </li>
@@ -41,6 +42,7 @@
                         <ul class="p-2 bg-base-100">
                             <li><a href="{{ route('citas.index') }}">Citas</a></li>
                             <li><a href="/asistencias">Asistencias</a></li>
+                            <li><a href="{{ route('planes.index') }}">Planes</a></li>
                         </ul>
                     </details>
                 </li>
