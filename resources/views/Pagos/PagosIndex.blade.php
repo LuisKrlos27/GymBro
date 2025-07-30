@@ -59,6 +59,7 @@
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
                             </form>
+                            <a href="{{ route('pagos.show', $pag->id) }}" class="btn btn-sm btn-info">Ver factura</a>
                         </td>
                     </tr>
                 @endforeach

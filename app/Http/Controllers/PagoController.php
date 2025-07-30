@@ -62,7 +62,7 @@ class PagoController extends Controller
      */
     public function show(Pago $pago)
     {
-        //
+        return view('Pagos.PagosShow', compact('pago'));
     }
 
     /**
