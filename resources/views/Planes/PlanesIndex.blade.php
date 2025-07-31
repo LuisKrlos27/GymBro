@@ -17,11 +17,11 @@
         </div>
     @endif
     <div class="relative mb-4">
-        <h2 class="text-xl font-bold text-center">PLANES</h2>
+        <h2 class="text-xl font-bold text-center text-accent">PLANES</h2>
     </div>
 
     <div class="flex justify-end mb-4">
-        <a href="{{ route('planes.create') }}" class="btn btn-success">REGISTRAR</a>
+        <a href="{{ route('planes.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
     </div>
 
     <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -29,11 +29,11 @@
             <!-- head -->
             <thead>
             <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Dias</th>
-                <th>Precio</th>
-                <th>Opciones</th>
+                <th class=" text-sm font-semibold text-gray-600">#</th>
+                <th class=" text-sm font-semibold text-gray-600">Nombre</th>
+                <th class=" text-sm font-semibold text-gray-600">Dias</th>
+                <th class=" text-sm font-semibold text-gray-600">Precio</th>
+                <th class=" text-sm font-semibold text-gray-600">Opciones</th>
             </tr>
             </thead>
             <tbody>

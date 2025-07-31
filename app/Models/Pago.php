@@ -11,6 +11,7 @@ class Pago extends Model
         'cliente_id',
         'plan_id',
         'fecha_pago',
+        'fecha_vencimiento',
         'hora_pago',
         'valor_total',
         'valor_pagado',

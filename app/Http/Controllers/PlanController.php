@@ -56,7 +56,7 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        //
+        return view('Planes.PlanesEdit', compact('plan'));
     }
 
     /**
@@ -64,7 +64,17 @@ class PlanController extends Controller
      */
     public function update(Request $request, Plan $plan)
     {
-        //
+        //dd($request->all());
+        $validated = $request->validate([
+            'nombre'=>'required|string|max:50',
+            'duracion_dias'=>'required|integer',
+            'precio'=>'required|numeric'
+        ]);
+
+        $plan->update($validated);
+
+        return redirect()->route('planes.index')->with('success','Plan actualizado correctamente.');
+
     }
 
     /**

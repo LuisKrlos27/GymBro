@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Asistencia;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,13 @@ class AsistenciaController extends Controller
      */
     public function index()
     {
-        //
+        // Obtiene todas las asistencias, incluyendo los datos del cliente relacionado (gracias al with)
+        // y las ordena de forma descendente por la fecha de asistencia.
+
+        $asistencia = Asistencia::with('cliente')->orderByDesc('fecha_asistencia')->get();
+
+        // Retorna la vista 'Asistencias.AsistenciasIndex' y le pasa la variable $asistencias
+        return view('Asistencias.AsistenciasIndex', compact('asistencia'));
     }
 
     /**
@@ -20,7 +27,11 @@ class AsistenciaController extends Controller
      */
     public function create()
     {
-        //
+        // Obtiene todos los clientes para poder mostrarlos en el formulario (en un select)
+        $cliente = Cliente::all();
+
+        // Retorna la vista 'Asistencias.AsistenciasForm' y le pasa los clientes disponibles
+        return view('Asistencias.AsistenciasForm', compact('cliente'));
     }
 
     /**
@@ -28,7 +39,20 @@ class AsistenciaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Valida que el campo cliente_id esté presente y exista en la tabla clientes
+        $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+        ]);
+
+        // Crea una nueva asistencia con el ID del cliente.
+        // La fecha y hora se agrega automáticamente por el modelo o migración.
+        Asistencia::create([
+            'cliente_id' => $request->cliente_id,
+        ]);
+
+        // Redirige a la vista de asistencias con un mensaje de éxito
+        return redirect()->route('asistencias.index')->with('success', 'Asistencia registrada correctamente.');
+
     }
 
     /**
@@ -60,6 +84,8 @@ class AsistenciaController extends Controller
      */
     public function destroy(Asistencia $asistencia)
     {
-        //
+        $asistencia->delete();
+
+        return redirect()->route('asistencias.index')->with('success','Asistencia correctamente eliminada.');
     }
 }

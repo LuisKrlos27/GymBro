@@ -22,7 +22,9 @@ Route::get('/', function () {
 Route::resource('clientes', ClienteController::class);
 Route::resource('empleados', EmpleadoController::class);
 Route::resource('roles', RolController::class);
-Route::resource('planes', PlanController::class);
+Route::resource('planes', PlanController::class)->parameters([
+    'planes'=>'plan',
+]);
 Route::resource('citas', CitaController::class);
 Route::resource('asistencias', AsistenciaController::class);
 Route::resource('productos', ProductoController::class);

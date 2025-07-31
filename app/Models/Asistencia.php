@@ -10,7 +10,7 @@ class Asistencia extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['cliente_id', 'fecha_hora'];
+    protected $fillable = ['cliente_id', 'fecha_asistencia'];
 
     public function cliente()
     {

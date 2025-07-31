@@ -15,8 +15,7 @@ return new class extends Migration
         Schema::create('asistencias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cliente_id')->constrained('clientes');
-            $table->timestamp('fecha_hora')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamps();
+            $table->timestamp('fecha_asistencia')->useCurrent();
         });
     }
 

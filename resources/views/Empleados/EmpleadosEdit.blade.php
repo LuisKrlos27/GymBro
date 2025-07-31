@@ -17,33 +17,33 @@
         </div>
     @endif
     <div class="max-w-2xl mx-auto mt-10 bg-base-100 p-6 rounded shadow">
-        <h2 class="text-2xl text-center font-bold mb-6">EDITAR EMPLEADO</h2>
+        <h2 class="text-2xl text-center font-bold mb-8 text-primary">EDITAR EMPLEADO</h2>
         <form action="{{ route('empleados.update', $empleado) }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @csrf
             @method('PUT')
 
             <div>
-                <label class="label">Nombre</label>
+                <label class=" text-sm font-semibold text-gray-600">Nombre</label>
                 <input type="text" name="nombre" value="{{ $empleado->nombre }}" class="input input-bordered w-full">
             </div>
 
             <div>
-                <label class="label">Cedula</label>
+                <label class=" text-sm font-semibold text-gray-600">Cedula</label>
                 <input type="number" name="cedula" value="{{ $empleado->cedula }}" class="input input-bordered w-full">
             </div>
 
             <div>
-                <label class="label">Edad</label>
+                <label class=" text-sm font-semibold text-gray-600">Edad</label>
                 <input type="number" name="edad" value="{{ $empleado->edad }}" class="input input-bordered w-full">
             </div>
 
             <div>
-                <label class="label">Celular</label>
+                <label class=" text-sm font-semibold text-gray-600">Celular</label>
                 <input type="number" name="celular" value="{{ $empleado->celular }}" class="input input-bordered w-full">
             </div>
 
             <div class="md:col-span-2">
-                <label class="label">Rol</label>
+                <label class=" text-sm font-semibold text-gray-600">Rol</label>
                 <select name="rol_id" class="select select-bordered w-full">
                     <option value="">Seleccione un rol</option>
                     @foreach ($rol as $rol)

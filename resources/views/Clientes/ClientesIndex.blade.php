@@ -17,11 +17,11 @@
         </div>
     @endif
     <div class="relative mb-4">
-        <h2 class="text-xl font-bold text-center">CLIENTES</h2>
+        <h2 class="text-xl font-bold text-center text-accent">CLIENTES</h2>
     </div>
 
     <div class="flex justify-end mb-4">
-        <a href="{{ route('clientes.create') }}" class="btn btn-success">REGISTRAR</a>
+        <a href="{{ route('clientes.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
     </div>
 
     <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -30,17 +30,17 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Nombre</th>
-                <th>Cedula</th>
-                <th>Edad</th>
-                <th>Celular</th>
-                <th>Opciones</th>
+                <th class=" text-sm font-semibold text-gray-600" >Nombre</th>
+                <th class=" text-sm font-semibold text-gray-600" >Cedula</th>
+                <th class=" text-sm font-semibold text-gray-600" >Edad</th>
+                <th class=" text-sm font-semibold text-gray-600" >Celular</th>
+                <th class=" text-sm font-semibold text-gray-600" >Opciones</th>
             </tr>
             </thead>
             <tbody>
                 @foreach ($cliente as $cli)
                     <tr>
-                        <th>{{ $cli->id }}</th>
+                        <td>{{ $cli->id }}</td>
                         <td>{{ $cli->nombre }}</td>
                         <td>{{ $cli->cedula }}</td>
                         <td>{{ $cli->edad }}</td>

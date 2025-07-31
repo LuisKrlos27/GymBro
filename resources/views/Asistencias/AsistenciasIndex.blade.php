@@ -1,4 +1,5 @@
 @extends('Home.HomeIndex')
+
 @section('content')
 <!-- Mensajes de éxito y error con desvanecimiento -->
     @if (session('success'))
@@ -16,48 +17,44 @@
             </div>
         </div>
     @endif
-    <div class="relative mb-4">
-        <h2 class="text-xl font-bold text-center text-accent">CITAS</h2>
-    </div>
 
-    <div class="flex justify-end mb-4">
-        <a href="{{ route('citas.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
-    </div>
+<div class="relative mb-4">
+    <h2 class="text-xl font-bold text-center text-accent">ASISTENCIAS</h2>
+</div>
 
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-        <table class="table">
-            <!-- head -->
-            <thead>
+<div class=" flex justify-end mb-4">
+    <a href="{{ route('asistencias.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
+</div>
+
+<div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+    <table class="table">
+        <thead>
             <tr>
                 <th class=" text-sm font-semibold text-gray-600">#</th>
                 <th class=" text-sm font-semibold text-gray-600">Cliente</th>
-                <th class=" text-sm font-semibold text-gray-600">Nutricionista</th>
-                <th class=" text-sm font-semibold text-gray-600">Fecha</th>
-                <th class=" text-sm font-semibold text-gray-600">Descripcion</th>
+                <th class=" text-sm font-semibold text-gray-600">Fecha y hora</th>
                 <th class=" text-sm font-semibold text-gray-600">Opciones</th>
             </tr>
-            </thead>
-            <tbody>
-                @foreach ($cita as $cit)
-                    <tr>
-                        <td>{{ $cit->id }}</td>
-                        <td>{{ $cit->cliente->nombre }}</td>
-                        <td>{{ $cit->empleado->nombre }}</td>
-                        <td>{{ $cit->fecha }}</td>
-                        <td>{{ $cit->descripcion }}</td>
-                        <td class="flex flex-col sm:flex-row gap-1">
-                            <a href="{{ route('citas.edit', $cit->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <form action="{{ route('citas.destroy', $cit->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este cliente.?')">
+        </thead>
+        <tbody>
+            @foreach ($asistencia as $asi)
+                <tr>
+                    <td>{{ $asi->id }}</td>
+                    <td>{{ $asi->cliente->nombre }}</td>
+                    <td>{{ \Carbon\Carbon::parse($asi->fecha_asistencia)->format('d/m/Y H:i') }}</td>
+                    <td class="flex flex-col sm:flex-row gap-1">
+                            <form action="{{ route('asistencias.destroy', $asi->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este asistencia?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
                             </form>
                         </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
 <!-- Script para ocultar alertas después de 3 segundos -->
     <script>
         setTimeout(() => {
@@ -75,5 +72,4 @@
             }
         }, 3000); // 3 segundos
     </script>
-
 @endsection

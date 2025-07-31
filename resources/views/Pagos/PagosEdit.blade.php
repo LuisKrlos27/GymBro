@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="max-w-3xl mx-auto mt-10 bg-base-100 p-6 rounded shadow">
-    <h2 class="text-2xl text-center font-bold mb-6">EDITAR PAGO / FACTURA</h2>
+    <h2 class="text-2xl text-center font-bold mb-6 ">EDITAR PAGO / FACTURA</h2>
 
     <form action="{{ route('pagos.update', $pago->id) }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         @csrf

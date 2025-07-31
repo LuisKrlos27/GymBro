@@ -43,14 +43,20 @@ class PagoController extends Controller
         $validated = $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'plan_id' => 'required|exists:planes,id',
-            'fecha_pago' => 'required|date',
             'valor_total' => 'required|numeric',
             'valor_pagado' => 'required|numeric|gte:valor_total',
             'estado' => 'required|boolean',
         ]);
 
+        $plan = Plan::findOrFail($validated['plan_id']);
+
         $validated['cambio'] = $validated['valor_pagado'] - $validated['valor_total'];
-        $validated['hora_pago'] = Carbon::now()->format('H:i:s'); // hora actual en formato HH:MM:SS
+        $validated['fecha_pago'] = Carbon::now()->toDateString();// Fecha actual
+        $validated['hora_pago'] = Carbon::now()->format('H:i:s');//Hora actual
+
+        // Fecha de vencimiento = fecha_pago + duración del plan
+        $fechaPago = Carbon::parse($validated['fecha_pago']);
+        $validated['fecha_vencimiento'] = $fechaPago->copy()->addDays($plan->duracion_dias);
 
         Pago::create($validated);
 

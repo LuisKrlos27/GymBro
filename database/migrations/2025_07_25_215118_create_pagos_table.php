@@ -16,15 +16,17 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cliente_id')->constrained('clientes');
             $table->foreignId('plan_id')->constrained('planes');
-            $table->date('fecha_pago');
-            $table->time('hora_pago')->default(DB::raw('CURRENT_TIME'));
-            $table->decimal('valor_total', 10, 2)->default(0);
-            $table->decimal('valor_pagado', 10, 2)->default(0);
-            $table->decimal('cambio', 10, 2)->default(0);
+            $table->date('fecha_pago')->default(DB::raw('CURRENT_DATE')); // Automática
+            $table->time('hora_pago')->default(DB::raw('CURRENT_TIME')); // Automática
+            $table->date('fecha_vencimiento'); // Se llena desde el controlador
+            $table->decimal('valor_total', 10, 2);
+            $table->decimal('valor_pagado', 10, 2);
+            $table->decimal('cambio', 10, 2);
             $table->boolean('estado')->default(false);
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

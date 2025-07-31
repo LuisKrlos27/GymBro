@@ -17,11 +17,11 @@
         </div>
     @endif
     <div class="relative mb-4">
-        <h2 class="text-xl font-bold text-center">EMPLEADOS</h2>
+        <h2 class="text-xl font-bold text-center text-accent">EMPLEADOS</h2>
     </div>
 
     <div class="flex justify-end mb-4">
-        <a href="{{ route('empleados.create') }}" class="btn btn-success">REGISTRAR</a>
+        <a href="{{ route('empleados.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
     </div>
 
     <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -29,19 +29,19 @@
             <!-- head -->
             <thead>
             <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Cedula</th>
-                <th>Edad</th>
-                <th>Celular</th>
-                <th>Rol</th>
-                <th>Opciones</th>
+                <th class=" text-sm font-semibold text-gray-600">#</th>
+                <th class=" text-sm font-semibold text-gray-600">Nombre</th>
+                <th class=" text-sm font-semibold text-gray-600">Cedula</th>
+                <th class=" text-sm font-semibold text-gray-600">Edad</th>
+                <th class=" text-sm font-semibold text-gray-600">Celular</th>
+                <th class=" text-sm font-semibold text-gray-600">Rol</th>
+                <th class=" text-sm font-semibold text-gray-600">Opciones</th>
             </tr>
             </thead>
             <tbody>
                 @foreach ($empleado as $emp)
                     <tr>
-                        <th>{{ $emp->id }}</th>
+                        <td>{{ $emp->id }}</td>
                         <td>{{ $emp->nombre }}</td>
                         <td>{{ $emp->cedula }}</td>
                         <td>{{ $emp->edad }}</td>

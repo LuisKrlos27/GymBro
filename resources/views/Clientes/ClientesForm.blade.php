@@ -2,27 +2,27 @@
 @section('content')
 
     <div class="max-w-2xl mx-auto mt-10 bg-base-100 p-6 rounded shadow">
-        <h2 class="text-2xl text-center font-bold mb-6">REGISTRO DE CLIENTE</h2>
+        <h2 class="text-2xl text-center font-bold mb-8 text-primary">REGISTRO DE CLIENTE</h2>
         <form action="{{ route('clientes.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @csrf
 
             <div>
-                <label class="label">Nombre</label>
+                <label class=" text-sm font-semibold text-gray-600">Nombre</label>
                 <input type="text" name="nombre" class="input input-bordered w-full">
             </div>
 
             <div>
-                <label class="label">Cédula</label>
+                <label class=" text-sm font-semibold text-gray-600">Cédula</label>
                 <input type="number" name="cedula" class="input input-bordered w-full">
             </div>
 
             <div>
-                <label class="label">Edad</label>
+                <label class=" text-sm font-semibold text-gray-600">Edad</label>
                 <input type="number" name="edad" class="input input-bordered w-full">
             </div>
 
             <div>
-                <label class="label">Celular</label>
+                <label class=" text-sm font-semibold text-gray-600">Celular</label>
                 <input type="number" name="celular" class="input input-bordered w-full">
             </div>
 
