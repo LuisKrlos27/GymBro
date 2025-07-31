@@ -31,7 +31,7 @@
                         <ul class="p-2 bg-base-100">
                             <li><a href="{{ route('clientes.index') }}">Clientes</a></li>
                             <li><a href="{{ route('empleados.index') }}">Empleados</a></li>
-                            <li><a href="/ventas">Roles</a></li>
+                            {{-- <li><a href="/ventas">Roles</a></li> --}}
                         </ul>
                     </details>
                 </li>
