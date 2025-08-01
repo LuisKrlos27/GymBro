@@ -15,7 +15,7 @@ use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\Detalle_ventaController;
 
 Route::get('/', function () {
-    return view('Home.HomeIndex');
+    return view('Landing.Welcome');
 });
 
 
