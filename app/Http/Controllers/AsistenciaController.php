@@ -11,14 +11,25 @@ class AsistenciaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Obtiene todas las asistencias, incluyendo los datos del cliente relacionado (gracias al with)
-        // y las ordena de forma descendente por la fecha de asistencia.
+        // Inicia la consulta con la relación del cliente
+        $query = Asistencia::with('cliente')->orderByDesc('fecha_asistencia');
 
-        $asistencia = Asistencia::with('cliente')->orderByDesc('fecha_asistencia')->get();
+        // Filtro por nombre del cliente
+        if ($request->filled('cliente')) {
+            $query->whereHas('cliente', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->cliente . '%');
+            });
+        }
 
-        // Retorna la vista 'Asistencias.AsistenciasIndex' y le pasa la variable $asistencias
+        // Filtro por fecha exacta (solo la fecha sin considerar hora)
+        if ($request->filled('fecha')) {
+            $query->whereDate('fecha_asistencia', $request->fecha);
+        }
+
+        $asistencia = $query->get();
+
         return view('Asistencias.AsistenciasIndex', compact('asistencia'));
     }
 
