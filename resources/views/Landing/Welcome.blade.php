@@ -8,21 +8,27 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
 
+    @if(session('success'))
+    <div class="alert alert-success shadow-lg my-4">
+        <span>{{ session('success') }}</span>
+    </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-error shadow-lg my-4">
+            <span>{{ session('error') }}</span>
+        </div>
+    @endif
+
     <!-- HERO -->
     <section class="relative bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-7">
-        <div class="absolute top-4 right-6">
-            <a href="{{ route('asistencias.index') }}"
-                class="bg-white text-indigo-600 font-semibold py-2 px-4 rounded-full hover:bg-gray-200 transition">
-                Iniciar sesión
-            </a>
-        </div>
         <div class="max-w-4xl mx-auto text-center px-4">
             <img src="{{ asset('images/interface-control-svgrepo-com.svg') }}" alt="Icono gimnasio" class="mx-auto mb-4 w-40" />
             <h1 class="text-4xl font-bold mb-4">
                 Controla tu gimnasio de forma fácil e inteligente
             </h1>
             <p class="text-lg mb-6">Registra pagos, controla asistencias y genera facturas sin esfuerzo.</p>
-            <a href="#demo" class="bg-white text-indigo-600 font-bold py-2 px-6 rounded-full hover:bg-gray-200">Solicita una demo</a>
+            <a href="{{ route('asistencias.index') }}" class="bg-white text-indigo-600 font-bold py-2 px-6 rounded-full hover:bg-gray-200">Inicar demo</a>
         </div>
     </section>
 
@@ -53,8 +59,8 @@
             <img src="{{ asset('images/cha-bubbles-two-svgrepo-com.svg') }}" alt="Feedback" class="mx-auto w-20 mb-6" />
             <h2 class="text-2xl font-bold mb-6">Lo que dicen nuestros usuarios</h2>
             <blockquote class="italic text-gray-700">
-                “Gracias a este sistema, dejé de usar Excel. Todo lo tengo en el celular y controlo los pagos al instante.”<br />
-                <span class="font-bold mt-2 block">— Luis Escobar, entrenador personal</span>
+                “Gracias a este sistema, dejé de usar Excel. Todo lo tengo sistematizado y controlo los pagos al instante.”<br />
+                <span class="font-bold mt-2 block">— Luis Escobar, Administrador</span>
             </blockquote>
         </div>
     </section>
@@ -66,11 +72,14 @@
             <p class="mb-6">Déjanos tus datos y agenda una demo gratuita</p>
             <form action="#" method="POST" class="grid grid-cols-1 gap-4">
                 @csrf
-                <input type="text" name="nombre" placeholder="Nombre completo" class="input input-bordered w-full p‑3 rounded border" required />
-                <input type="email" name="email" placeholder="Correo electrónico" class="input input-bordered w-full p‑3 rounded border" required />
-                <input type="tel" name="telefono" placeholder="Número de WhatsApp" class="input input-bordered w-full p‑3 rounded border" />
+                <input type="text" name="nombre" placeholder="Nombre completo" required class="input input-bordered w-full p-3 rounded border">
+                <input type="email" name="email" placeholder="Correo electrónico" required class="input input-bordered w-full p-3 rounded border">
+                <input type="tel" name="telefono" placeholder="Número de WhatsApp" class="input input-bordered w-full p-3 rounded border">
                 <button type="submit" class="bg-indigo-600 text-white py-3 rounded hover:bg-indigo-700">Solicitar Demo</button>
             </form>
+
+
+
         </div>
     </section>
 
