@@ -10,7 +10,7 @@ class Producto extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['nombre', 'precio', 'cantidad'];
+    protected $fillable = ['nombre', 'precio', 'cantidad','fecha_pago'];
 
     public function detallesVentas()
     {

@@ -57,7 +57,7 @@
                     </details>
                 </li>
 
-                <li><a href="/productos">Inventario</a></li>
+                <li><a href="{{ route('productos.index') }}">Inventario</a></li>
             </ul>
         </div>
         <div class="navbar-end">
