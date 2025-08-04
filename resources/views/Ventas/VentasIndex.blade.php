@@ -1,99 +1,70 @@
 @extends('Home.HomeIndex')
 
 @section('content')
-<div class="relative mb-4">
-    <h2 class="text-xl font-bold text-center text-accent">REGISTRAR VENTA</h2>
+<div class="max-w-4xl mx-auto mt-10">
+    <h2 class="text-2xl font-bold mb-6 text-center text-primary">VENTAS</h2>
+
+    @if(session('success'))
+        <div class="alert alert-success mb-4 shadow-lg">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if($venta->isEmpty())
+        <p class="text-center text-gray-600">No hay ventas registradas.</p>
+    @else
+        <div class="overflow-x-auto">
+            <table class="table table-zebra">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Cliente</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                        <th>Precio</th>
+                        <th>Total</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($venta as $ven)
+                        <tr>
+                            <td>{{ $ven->id }}</td>
+                            <td>{{ $ven->cliente->nombre }}</td>
+                            <td> @foreach($ven->detalles_json as $detalle)
+                                    {{ $detalle['nombre']}}
+                                @endforeach
+                            </td>
+                            <td> @foreach($ven->detalles_json as $detalle)
+                                    {{ $detalle['cantidad']}}
+                                @endforeach
+                            </td>
+                            <td>{{ \Carbon\Carbon::parse($ven->fecha)->format('d/m/Y') }}</td>
+                            <td> @foreach($ven->detalles_json as $detalle)
+                                    ${{ number_format($detalle['precio_unitario'])}}
+                                @endforeach
+                            </td>
+
+                            <td>${{ number_format($ven->total) }}</td>
+                            <td class="flex flex-col sm:flex-row gap-1">
+                                <a href="{{ route('ventas.show', $ven->id) }}" class="btn btn-sm btn-info">Ver factura</a>
+                                <a href="{{ route('ventas.edit', $ven->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                                <form action="{{ route('ventas.destroy', $ven->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este pago?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
 </div>
 
-@if (session('success'))
-    <div id="success-alert" class="alert alert-success shadow-lg mb-4 transition-opacity duration-500">
-        <div>
-            <span>{{ session('success') }}</span>
-        </div>
-    </div>
-@endif
-
-@if (session('error'))
-    <div id="error-alert" class="alert alert-error shadow-lg mb-4 transition-opacity duration-500">
-        <div>
-            <span>{{ session('error') }}</span>
-        </div>
-    </div>
-@endif
-
-<form action="{{ route('ventas.store') }}" method="POST" class="space-y-4">
-    @csrf
-
-    <!-- Cliente -->
-    <div>
-        <label for="cliente_id" class="block font-bold mb-1">Cliente</label>
-        <select name="cliente_id" id="cliente_id" class="select select-bordered w-full" required>
-            <option value="">Seleccione un cliente</option>
-            @foreach ($clientes as $cliente)
-                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <!-- Productos dinámicos -->
-    <div id="productos-container" class="space-y-4">
-        <div class="producto-row border p-4 rounded-lg bg-base-200">
-            <label class="block font-bold mb-1">Producto</label>
-            <select name="productos[0][producto_id]" class="select select-bordered w-full" required>
-                <option value="">Seleccione producto</option>
-                @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">
-                        {{ $producto->nombre }} - ${{ number_format($producto->precio) }} (Stock: {{ $producto->cantidad }})
-                    </option>
-                @endforeach
-            </select>
-
-            <label class="block font-bold mt-2 mb-1">Cantidad</label>
-            <input type="number" name="productos[0][cantidad]" class="input input-bordered w-full" min="1" required>
-        </div>
-    </div>
-
-    <button type="button" onclick="agregarProducto()" class="btn btn-outline btn-accent">+ Agregar producto</button>
-
-    <!-- Valor pagado -->
-    <div>
-        <label for="valor_pagado" class="block font-bold mb-1">Valor pagado por el cliente</label>
-        <input type="number" name="valor_pagado" id="valor_pagado" class="input input-bordered w-full" min="0" required>
-    </div>
-
-    <!-- Botón -->
-    <div class="text-center">
-        <button type="submit" class="btn btn-primary font-bold">Registrar Venta</button>
-    </div>
-</form>
-
 <script>
-    let index = 1;
-    function agregarProducto() {
-        const container = document.getElementById('productos-container');
-        const row = document.createElement('div');
-        row.classList.add('producto-row', 'border', 'p-4', 'rounded-lg', 'bg-base-200');
-
-        row.innerHTML = `
-            <label class="block font-bold mb-1">Producto</label>
-            <select name="productos[${index}][producto_id]" class="select select-bordered w-full" required>
-                <option value="">Seleccione producto</option>
-                @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">
-                        {{ $producto->nombre }} - ${{ number_format($producto->precio) }} (Stock: {{ $producto->cantidad }})
-                    </option>
-                @endforeach
-            </select>
-
-            <label class="block font-bold mt-2 mb-1">Cantidad</label>
-            <input type="number" name="productos[${index}][cantidad]" class="input input-bordered w-full" min="1" required>
-        `;
-
-        container.appendChild(row);
-        index++;
-    }
-
-    // Desvanecer alertas
     setTimeout(() => {
         const success = document.getElementById('success-alert');
         const error = document.getElementById('error-alert');

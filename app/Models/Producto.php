@@ -12,8 +12,5 @@ class Producto extends Model
 
     protected $fillable = ['nombre', 'precio', 'cantidad','fecha_pago'];
 
-    public function detallesVentas()
-    {
-        return $this->hasMany(Detalle_Venta::class, 'producto_id');
-    }
+    
 }

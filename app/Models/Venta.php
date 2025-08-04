@@ -10,15 +10,14 @@ class Venta extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['cliente_id', 'fecha', 'total'];
+    protected $fillable = ['cliente_id', 'fecha', 'total', 'detalles_json'];
+
+    protected $casts = [
+        'detalles_json' => 'array',
+    ];
 
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
-    }
-
-    public function detalles()
-    {
-        return $this->hasMany(Detalle_Venta::class, 'venta_id');
     }
 }
