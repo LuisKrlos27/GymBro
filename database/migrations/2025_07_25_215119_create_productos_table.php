@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 50);
-            $table->decimal('precio', 10, 2);
+            $table->decimal('precio', 10, 0);
             $table->integer('cantidad');
             $table->date('fecha_pago')->default(DB::raw('CURRENT_DATE')); // Automática
             $table->timestamps();

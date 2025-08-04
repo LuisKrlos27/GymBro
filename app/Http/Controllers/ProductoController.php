@@ -30,6 +30,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $validated = $request->validate([
             'nombre'=>'string|max:50',
             'precio'=>'numeric',
@@ -37,6 +38,7 @@ class ProductoController extends Controller
 
         ]);
         Producto::create($validated);
+        //dd(Producto::all());
         return redirect()->route('productos.index')->with('success', 'Producto registrado correctamente.');
 
     }
@@ -54,7 +56,7 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        return view('Productos.ProductosEdit',compact('producto'));
     }
 
     /**
@@ -62,7 +64,18 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //
+        //dd($request->all());
+        $validated = $request->validate([
+            'nombre'=>'string|max:50',
+            'precio'=>'numeric',
+            'cantidad'=>'integer',
+            'fecha_pago'=>'date'
+
+        ]);
+        $producto->update($validated);
+        //dd(Producto::all());
+        return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
+
     }
 
     /**
@@ -70,6 +83,9 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+
+        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
+
     }
 }

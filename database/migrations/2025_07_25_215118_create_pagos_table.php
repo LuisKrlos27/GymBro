@@ -19,9 +19,9 @@ return new class extends Migration
             $table->date('fecha_pago')->default(DB::raw('CURRENT_DATE')); // Automática
             $table->time('hora_pago')->default(DB::raw('CURRENT_TIME')); // Automática
             $table->date('fecha_vencimiento'); // Se llena desde el controlador
-            $table->decimal('valor_total', 10, 2);
-            $table->decimal('valor_pagado', 10, 2);
-            $table->decimal('cambio', 10, 2);
+            $table->decimal('valor_total', 10, 0);
+            $table->decimal('valor_pagado', 10, 0);
+            $table->decimal('cambio', 10, 0);
             $table->boolean('estado')->default(false);
             $table->timestamps();
         });
