@@ -18,52 +18,57 @@
     </div>
 @endif
 
-<div class="relative mb-4">
-    <h2 class="text-xl font-bold text-center text-accent">ASISTENCIAS</h2>
-</div>
+<div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE ASISTENCIAS</h2>
+            <div class="flex justify-end mb-4">
+                <a href="{{ route('asistencias.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
+            </div>
 
-<!-- FILTRO -->
-<form method="GET" action="{{ route('asistencias.index') }}" class="flex flex-col md:flex-row gap-2 justify-center mb-4">
-    <input type="text" name="cliente" placeholder="Buscar por cliente" value="{{ request('cliente') }}"
-        class="input input-bordered w-full md:w-1/9" />
+        @if($asistencia->isEmpty())
+            <p class="text-center text-gray-600">No hay asistencias registradas.</p>
+            @else
 
-    <button type="submit" class="font-bold btn btn-outline btn-primary">Filtrar</button>
-    <a href="{{ route('asistencias.index') }}" class="font-bold btn btn-outline">Limpiar</a>
+        <form method="GET" action="{{ route('asistencias.index') }}" class="flex flex-col md:flex-row gap-2 justify-center mb-4">
+            <input type="text" name="cliente" placeholder="Buscar por cliente" value="{{ request('cliente') }}"
+                class="input input-bordered w-full md:w-1/9" />
 
-    <div class="flex justify-end mb-4">
-        <a href="{{ route('asistencias.create') }}" class="font-bold btn btn-outline btn-success">REGISTRAR</a>
-    </div>
-</form>
+            <button type="submit" class="font-bold btn btn-outline btn-primary">Filtrar</button>
+            <a href="{{ route('asistencias.index') }}" class="font-bold btn btn-outline">Limpiar</a>
 
+            <div class="flex justify-end mb-4">
+                <a href="{{ route('asistencias.create') }}" class="font-bold btn btn-outline btn-success">REGISTRAR</a>
+            </div>
+        </form>
 
-
-<div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="text-sm font-semibold text-gray-600">#</th>
-                <th class="text-sm font-semibold text-gray-600">Cliente</th>
-                <th class="text-sm font-semibold text-gray-600">Fecha y hora</th>
-                <th class="text-sm font-semibold text-gray-600">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($asistencia as $asi)
-                <tr>
-                    <td>{{ $asi->id }}</td>
-                    <td>{{ $asi->cliente->nombre }}</td>
-                    <td>{{ \Carbon\Carbon::parse($asi->fecha_asistencia)->format('d/m/Y H:i') }}</td>
-                    <td class="flex flex-col sm:flex-row gap-1">
-                        <form action="{{ route('asistencias.destroy', $asi->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar esta asistencia?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-sm font-semibold text-gray-600">#</th>
+                        <th class="text-sm font-semibold text-gray-600">Cliente</th>
+                        <th class="text-sm font-semibold text-gray-600">Fecha y hora</th>
+                        <th class="text-sm font-semibold text-gray-600">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($asistencia as $asi)
+                        <tr>
+                            <td>{{ $asi->id }}</td>
+                            <td>{{ $asi->cliente->nombre }}</td>
+                            <td>{{ \Carbon\Carbon::parse($asi->fecha_asistencia)->format('d/m/Y H:i') }}</td>
+                            <td class="flex flex-col sm:flex-row gap-1">
+                                <form action="{{ route('asistencias.destroy', $asi->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar esta asistencia?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
 </div>
 
 <!-- Script para ocultar alertas después de 3 segundos -->

@@ -1,15 +1,24 @@
 @extends('Home.HomeIndex')
 
 @section('content')
-<div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
-    <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE VENTAS</h2>
-
-    @if(session('success'))
-        <div class="alert alert-success shadow-lg mb-4">
-            {{ session('success') }}
+<!-- Mensajes de éxito y error con desvanecimiento -->
+    @if (session('success'))
+        <div id="success-alert" class="alert alert-success shadow-lg mb-4 md:col-span-4 transition-opacity duration-500">
+            <div>
+                <span>{{ session('success') }}</span>
+            </div>
         </div>
     @endif
 
+    @if (session('error'))
+        <div id="error-alert" class="alert alert-error shadow-lg mb-4 md:col-span-4 transition-opacity duration-500">
+            <div>
+                <span>{{ session('error') }}</span>
+            </div>
+        </div>
+    @endif
+<div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE VENTAS</h2>
     @if($venta->isEmpty())
         <p class="text-center text-gray-600">No hay ventas registradas.</p>
     @else

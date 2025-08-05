@@ -16,51 +16,54 @@
             </div>
         </div>
     @endif
-    <div class="relative mb-4">
-        <h2 class="text-xl font-bold text-center text-accent">EMPLEADOS</h2>
-    </div>
+<div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE EMPLEADOS</h2>
+        <div class="flex justify-end mb-4">
+            <a href="{{ route('empleados.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
+        </div>
 
-    <div class="flex justify-end mb-4">
-        <a href="{{ route('empleados.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
-    </div>
+    @if($empleado->isEmpty())
+        <p class="text-center text-gray-600">No hay empleados registrados.</p>
+        @else
 
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-        <table class="table">
-            <!-- head -->
-            <thead>
-            <tr>
-                <th class=" text-sm font-semibold text-gray-600">#</th>
-                <th class=" text-sm font-semibold text-gray-600">Nombre</th>
-                <th class=" text-sm font-semibold text-gray-600">Cedula</th>
-                <th class=" text-sm font-semibold text-gray-600">Edad</th>
-                <th class=" text-sm font-semibold text-gray-600">Celular</th>
-                <th class=" text-sm font-semibold text-gray-600">Rol</th>
-                <th class=" text-sm font-semibold text-gray-600">Opciones</th>
-            </tr>
-            </thead>
-            <tbody>
-                @foreach ($empleado as $emp)
-                    <tr>
-                        <td>{{ $emp->id }}</td>
-                        <td>{{ $emp->nombre }}</td>
-                        <td>{{ $emp->cedula }}</td>
-                        <td>{{ $emp->edad }}</td>
-                        <td>{{ $emp->celular }}</td>
-                        <td>{{ $emp->rol->nombre }}</td>
-                        <td class="flex flex-col sm:flex-row gap-1">
-                            <a href="{{ route('empleados.edit', $emp->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <form action="{{ route('empleados.destroy', $emp->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este empleado?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-<!-- Script para ocultar alertas después de 3 segundos -->
+        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class=" text-sm font-semibold text-gray-600">#</th>
+                    <th class=" text-sm font-semibold text-gray-600">Nombre</th>
+                    <th class=" text-sm font-semibold text-gray-600">Cedula</th>
+                    <th class=" text-sm font-semibold text-gray-600">Edad</th>
+                    <th class=" text-sm font-semibold text-gray-600">Celular</th>
+                    <th class=" text-sm font-semibold text-gray-600">Rol</th>
+                    <th class=" text-sm font-semibold text-gray-600">Opciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach ($empleado as $emp)
+                        <tr>
+                            <td>{{ $emp->id }}</td>
+                            <td>{{ $emp->nombre }}</td>
+                            <td>{{ $emp->cedula }}</td>
+                            <td>{{ $emp->edad }}</td>
+                            <td>{{ $emp->celular }}</td>
+                            <td>{{ $emp->rol->nombre }}</td>
+                            <td class="flex flex-col sm:flex-row gap-1">
+                                <a href="{{ route('empleados.edit', $emp->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                                <form action="{{ route('empleados.destroy', $emp->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este empleado?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+</div>
+
     <script>
         setTimeout(() => {
             const success = document.getElementById('success-alert');

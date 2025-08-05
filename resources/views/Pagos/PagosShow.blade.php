@@ -6,61 +6,51 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        {{-- Cliente --}}
         <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-600 mb-1">Cliente</label>
             <input type="text" class="input input-bordered w-full" value="{{ $pago->cliente->nombre }}" disabled>
         </div>
 
-        {{-- Plan --}}
         <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-600 mb-1">Plan</label>
             <input type="text" class="input input-bordered w-full" value="{{ $pago->plan->nombre }} - ${{ number_format($pago->plan->precio, 0, ',', '.') }}" disabled>
         </div>
 
-        {{-- Fecha de pago --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1">Fecha de pago</label>
             <input type="date" class="input input-bordered w-full" value="{{ $pago->fecha_pago }}" disabled>
         </div>
 
-        {{-- Hora de pago --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1">Hora de pago</label>
             <input type="time" class="input input-bordered w-full" value="{{ $pago->hora_pago }}" disabled>
         </div>
 
-        {{-- Fecha de vencimiento --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1">Fecha de vencimiento</label>
             <input type="date" class="input input-bordered w-full" value="{{ $pago->fecha_vencimiento }}" disabled>
         </div>
 
-        {{-- Estado --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1">Estado</label>
             <input type="text" class="input input-bordered w-full" value="{{ $pago->estado ? 'Activo' : 'Inactivo' }}" disabled>
         </div>
 
-        {{-- Valor total --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1">Valor Total</label>
             <input type="number" class="input input-bordered w-full" value="{{ $pago->valor_total }}" disabled>
         </div>
 
-        {{-- Valor pagado --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1">Valor Pagado</label>
             <input type="number" class="input input-bordered w-full" value="{{ $pago->valor_pagado }}" disabled>
         </div>
 
-        {{-- Cambio --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1">Cambio</label>
             <input type="number" class="input input-bordered w-full" value="{{ $pago->cambio }}" disabled>
         </div>
 
-        {{-- Botón volver --}}
         <div class="md:col-span-2 flex justify-center pt-6">
             <a href="{{ route('pagos.index') }}" class="btn btn-primary px-8">Volver</a>
         </div>

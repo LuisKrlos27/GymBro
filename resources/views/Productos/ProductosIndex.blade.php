@@ -16,47 +16,51 @@
             </div>
         </div>
     @endif
-    <div class="relative mb-4">
-        <h2 class="text-xl font-bold text-center text-accent">PRODUCTOS</h2>
-    </div>
 
-    <div class="flex justify-end mb-4">
-        <a href="{{ route('productos.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
-    </div>
+    <div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE PRODUCTOS</h2>
+            <div class="flex justify-end mb-4">
+                <a href="{{ route('productos.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
+            </div>
 
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-        <table class="table">
-            <!-- head -->
-            <thead>
-            <tr>
-                <th class=" text-sm font-semibold text-gray-600">#</th>
-                <th class=" text-sm font-semibold text-gray-600">Nombre</th>
-                <th class=" text-sm font-semibold text-gray-600">Precio</th>
-                <th class=" text-sm font-semibold text-gray-600">Cantidad</th>
-                <th class=" text-sm font-semibold text-gray-600">Fecha</th>
-                <th class=" text-sm font-semibold text-gray-600">Opciones</th>
-            </tr>
-            </thead>
-            <tbody>
-                @foreach ($producto as $pro)
+        @if($producto->isEmpty())
+            <p class="text-center text-gray-600">No hay productos registrados.</p>
+            @else
+            <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+                <table class="table">
+                    <!-- head -->
+                    <thead>
                     <tr>
-                        <td>{{ $pro->id }}</td>
-                        <td>{{ $pro->nombre }}</td>
-                        <td>{{ $pro->precio }}</td>
-                        <td>{{ $pro->cantidad }}</td>
-                        <td>{{ $pro->fecha_pago }}</td>
-                        <td class="flex flex-col sm:flex-row gap-1">
-                            <a href="{{ route('productos.edit', $pro->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <form action="{{ route('productos.destroy', $pro->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este producto?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
-                            </form>
-                        </td>
+                        <th class=" text-sm font-semibold text-gray-600">#</th>
+                        <th class=" text-sm font-semibold text-gray-600">Nombre</th>
+                        <th class=" text-sm font-semibold text-gray-600">Precio</th>
+                        <th class=" text-sm font-semibold text-gray-600">Cantidad</th>
+                        <th class=" text-sm font-semibold text-gray-600">Fecha</th>
+                        <th class=" text-sm font-semibold text-gray-600">Opciones</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($producto as $pro)
+                            <tr>
+                                <td>{{ $pro->id }}</td>
+                                <td>{{ $pro->nombre }}</td>
+                                <td>{{ $pro->precio }}</td>
+                                <td>{{ $pro->cantidad }}</td>
+                                <td>{{ $pro->fecha_pago }}</td>
+                                <td class="flex flex-col sm:flex-row gap-1">
+                                    <a href="{{ route('productos.edit', $pro->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                                    <form action="{{ route('productos.destroy', $pro->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este producto?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
     </div>
 <!-- Script para ocultar alertas después de 3 segundos -->
     <script>

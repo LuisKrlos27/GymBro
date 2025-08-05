@@ -20,7 +20,6 @@
         </div>
     @endif
 
-    <!-- HERO -->
     <section class="relative bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-7">
         <div class="max-w-4xl mx-auto text-center px-4">
             <img src="{{ asset('images/interface-control-svgrepo-com.svg') }}" alt="Icono gimnasio" class="mx-auto mb-4 w-40" />
@@ -32,7 +31,6 @@
         </div>
     </section>
 
-    <!-- BENEFICIOS -->
     <section class="py-20 bg-gray-200">
         <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
@@ -53,7 +51,6 @@
         </div>
     </section>
 
-    <!-- TESTIMONIOS -->
     <section class="bg-gray-100 py-20">
         <div class="max-w-3xl mx-auto text-center">
             <img src="{{ asset('images/cha-bubbles-two-svgrepo-com.svg') }}" alt="Feedback" class="mx-auto w-20 mb-6" />
@@ -65,7 +62,6 @@
         </div>
     </section>
 
-    <!-- FORMULARIO -->
     <section id="demo" class="py-16 bg-white">
         <div class="max-w-xl mx-auto px-4 text-center">
             <h2 class="text-2xl font-bold mb-4">¿Listo para digitalizar tu gimnasio?</h2>
@@ -85,7 +81,7 @@
 
     <!-- FOOTER -->
     <footer class="bg-gray-800 text-white text-center py-6">
-        <p>&copy; {{ date('Y') }} SistemaFit. Todos los derechos reservados.</p>
+        <p>&copy; {{ date('Y') }} GymBro. Todos los derechos reservados.</p>
     </footer>
 </body>
 </html>

@@ -16,46 +16,48 @@
             </div>
         </div>
     @endif
-    <div class="relative mb-4">
-        <h2 class="text-xl font-bold text-center text-accent">PLANES</h2>
-    </div>
+<div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE PLANES</h2>
+        <div class="flex justify-end mb-4">
+            <a href="{{ route('planes.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
+        </div>
 
-    <div class="flex justify-end mb-4">
-        <a href="{{ route('planes.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
-    </div>
-
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-        <table class="table">
-            <!-- head -->
-            <thead>
-            <tr>
-                <th class=" text-sm font-semibold text-gray-600">#</th>
-                <th class=" text-sm font-semibold text-gray-600">Nombre</th>
-                <th class=" text-sm font-semibold text-gray-600">Dias</th>
-                <th class=" text-sm font-semibold text-gray-600">Precio</th>
-                <th class=" text-sm font-semibold text-gray-600">Opciones</th>
-            </tr>
-            </thead>
-            <tbody>
-                @foreach ($plan as $pla)
-                    <tr>
-                        <th>{{ $pla->id }}</th>
-                        <td>{{ $pla->nombre }}</td>
-                        <td>{{ $pla->duracion_dias }}</td>
-                        <td>{{ $pla->precio }}</td>
-                        <td class="flex flex-col sm:flex-row gap-1">
-                            <a href="{{ route('planes.edit', $pla->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <form action="{{ route('planes.destroy', $pla->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este plan?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+    @if($plan->isEmpty())
+        <p class="text-center text-gray-600">No hay planes registrados.</p>
+        @else
+        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class=" text-sm font-semibold text-gray-600">#</th>
+                    <th class=" text-sm font-semibold text-gray-600">Nombre</th>
+                    <th class=" text-sm font-semibold text-gray-600">Dias</th>
+                    <th class=" text-sm font-semibold text-gray-600">Precio</th>
+                    <th class=" text-sm font-semibold text-gray-600">Opciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach ($plan as $pla)
+                        <tr>
+                            <th>{{ $pla->id }}</th>
+                            <td>{{ $pla->nombre }}</td>
+                            <td>{{ $pla->duracion_dias }}</td>
+                            <td>{{ $pla->precio }}</td>
+                            <td class="flex flex-col sm:flex-row gap-1">
+                                <a href="{{ route('planes.edit', $pla->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                                <form action="{{ route('planes.destroy', $pla->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este plan?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+</div>
 <!-- Script para ocultar alertas después de 3 segundos -->
     <script>
         setTimeout(() => {

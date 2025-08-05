@@ -8,7 +8,6 @@
         @csrf
         @method('PUT')
 
-        {{-- Cliente --}}
         <div class="md:col-span-2">
             <label class="label">Cliente</label>
             <select name="cliente_id" class="select select-bordered w-full" required>
@@ -21,7 +20,6 @@
             </select>
         </div>
 
-        {{-- Plan --}}
         <div class="md:col-span-2">
             <label class="label">Plan</label>
             <select id="plan_id" name="plan_id" class="select select-bordered w-full" required>
@@ -34,37 +32,31 @@
             </select>
         </div>
 
-        {{-- Fecha --}}
         <div>
             <label class="label">Fecha</label>
             <input type="date" name="fecha_pago" value="{{ $pago->fecha_pago }}" class="input input-bordered w-full" required>
         </div>
 
-        {{-- Hora --}}
         <div>
             <label class="label">Hora</label>
             <input type="time" name="hora_pago" value="{{ $pago->hora_pago }}" class="input input-bordered w-full" readonly>
         </div>
 
-        {{-- Valor Total --}}
         <div>
             <label class="label">Valor Total</label>
             <input type="number" id="valor_total" name="valor_total" value="{{ $pago->valor_total }}" step="0.01" class="input input-bordered w-full" readonly required>
         </div>
 
-        {{-- Valor Pagado --}}
         <div>
             <label class="label">Valor Pagado</label>
             <input type="number" id="valor_pagado" name="valor_pagado" value="{{ $pago->valor_pagado }}" step="0.01" class="input input-bordered w-full" required>
         </div>
 
-        {{-- Cambio --}}
         <div>
             <label class="label">Cambio</label>
             <input type="number" id="cambio" name="cambio" value="{{ $pago->cambio }}" step="0.01" class="input input-bordered w-full" readonly required>
         </div>
 
-        {{-- Estado --}}
         <div>
             <label class="label">Estado</label>
             <select name="estado" class="select select-bordered w-full" required>
@@ -73,7 +65,6 @@
             </select>
         </div>
 
-        {{-- Botones --}}
         <div class="md:col-span-2 flex justify-center gap-4 pt-4">
             <a href="{{ route('pagos.index') }}" class="btn btn-warning">Cancelar</a>
             <button type="submit" class="btn btn-primary">Actualizar</button>

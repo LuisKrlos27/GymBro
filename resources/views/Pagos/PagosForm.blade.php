@@ -7,7 +7,6 @@
     <form action="{{ route('pagos.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         @csrf
 
-        {{-- Cliente --}}
         <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-600 mb-1"">Cliente</label>
             <select name="cliente_id" class="select select-bordered w-full" required>
@@ -18,7 +17,6 @@
             </select>
         </div>
 
-        {{-- Plan --}}
         <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-600 mb-1"">Plan</label>
             <select id="plan_id" name="plan_id" class="select select-bordered w-full" required>
@@ -31,25 +29,21 @@
             </select>
         </div>
 
-        {{-- Valor Total --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1"">Valor Total</label>
             <input type="number" id="valor_total" name="valor_total" step="0.01" class="input input-bordered w-full" readonly required>
         </div>
 
-        {{-- Valor Pagado --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1"">Valor Pagado</label>
             <input type="number" id="valor_pagado" name="valor_pagado" step="0.01" class="input input-bordered w-full" required>
         </div>
 
-        {{-- Cambio --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1"">Cambio</label>
             <input type="number" id="cambio" name="cambio" step="0.01" class="input input-bordered w-full" readonly required>
         </div>
 
-        {{-- Estado --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1"">Estado</label>
             <select name="estado" class="select select-bordered w-full" required>
@@ -58,7 +52,6 @@
             </select>
         </div>
 
-        {{-- Botones --}}
         <div class="md:col-span-2 flex justify-center gap-4 pt-4">
             <a href="{{ route('pagos.index') }}" class="btn btn-warning">Cancelar</a>
             <button type="submit" class="btn btn-primary">Guardar</button>
