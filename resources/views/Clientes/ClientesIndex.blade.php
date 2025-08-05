@@ -19,7 +19,7 @@
 <div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
     <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE CLIENTES</h2>
         <div class="flex justify-end mb-4">
-            <a href="{{ route('clientes.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
+            <a href="{{ route('clientes.create') }}" class="font-bold btn btn-outline btn-success">REGISTRAR</a>
         </div>
 
     @if($cliente->isEmpty())
@@ -47,11 +47,11 @@
                             <td>{{ $cli->edad }}</td>
                             <td>{{ $cli->celular }}</td>
                             <td class="flex flex-col sm:flex-row gap-1">
-                                <a href="{{ route('clientes.edit', $cli->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="{{ route('clientes.edit', $cli->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
                                 <form action="{{ route('clientes.destroy', $cli->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este cliente.?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
+                                    <button class="font-bold btn-sm btn btn-outline btn-error" type="submit">Eliminar</button>
                                 </form>
                             </td>
                         </tr>

@@ -12,7 +12,7 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        //lo controlo desde la migración en seeder creando los roles por defecto
     }
 
     /**

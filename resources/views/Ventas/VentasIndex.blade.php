@@ -19,6 +19,9 @@
     @endif
 <div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
     <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE VENTAS</h2>
+        <div class="flex justify-end mb-4">
+            <a href="{{ route('ventas.create') }}" class="font-bold btn btn-outline btn-success">REGISTRAR</a>
+        </div>
     @if($venta->isEmpty())
         <p class="text-center text-gray-600">No hay ventas registradas.</p>
     @else
@@ -65,12 +68,12 @@
                             <td>${{ number_format($ven->total) }}</td>
                             <td>{{ \Carbon\Carbon::parse($ven->fecha)->format('d/m/Y') }}</td>
                             <td class="flex flex-col sm:flex-row gap-2">
-                                <a href="{{ route('ventas.show', $ven->id) }}" class="btn btn-sm btn-info">Ver factura</a>
-                                <a href="{{ route('ventas.edit', $ven->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="{{ route('ventas.show', $ven->id) }}" class="font-bold btn-sm btn btn-outline btn-info">Ver factura</a>
+                                <a href="{{ route('ventas.edit', $ven->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
                                 <form action="{{ route('ventas.destroy', $ven->id) }}" method="POST" onsubmit="return confirm('¿Eliminar esta venta?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
+                                    <button class="font-bold btn-sm btn btn-outline btn-error" type="submit">Eliminar</button>
                                 </form>
                             </td>
                         </tr>

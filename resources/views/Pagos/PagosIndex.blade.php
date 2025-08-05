@@ -16,7 +16,7 @@
 <div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
     <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE PAGOS</h2>
         <div class="flex justify-end mb-4">
-            <a href="{{ route('pagos.create') }}" class="font-bold btn btn-success">REGISTRAR</a>
+            <a href="{{ route('pagos.create') }}" class="font-bold btn btn-outline btn-success">REGISTRAR</a>
         </div>
 
     @if($pago->isEmpty())
@@ -52,12 +52,12 @@
                                 @endif
                             </td>
                             <td class="flex flex-col sm:flex-row gap-1">
-                                <a href="{{ route('pagos.show', $pag->id) }}" class="btn btn-sm btn-info">Ver factura</a>
-                                <a href="{{ route('pagos.edit', $pag->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="{{ route('pagos.show', $pag->id) }}" class="font-bold btn-sm btn btn-outline btn-info">Ver factura</a>
+                                <a href="{{ route('pagos.edit', $pag->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
                                 <form action="{{ route('pagos.destroy', $pag->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este pago?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
+                                    <button class="font-bold btn-sm btn btn-outline btn-error" type="submit">Eliminar</button>
                                 </form>
                             </td>
                         </tr>

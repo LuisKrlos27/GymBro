@@ -54,10 +54,12 @@ class VentaController extends Controller
         'productos.*.cantidad' => 'required|integer|min:1',
         'valor_pagado' => 'required|numeric|min:0',
         ]);
-
+        //variable total para calcular el total de la venta
         $total = 0;
+        //array para crear detalles de la venta por separado
         $detalles = [];
 
+        //Ciclo para recorrer todos los productos y guardarlo en el array detalles
         foreach ($request->productos as $item) {
             $producto = Producto::findOrFail($item['producto_id']);
 
@@ -80,6 +82,7 @@ class VentaController extends Controller
             return back()->with('error', 'El valor pagado no cubre el total de la venta.');
         }
 
+        //guarda la venta
         $venta = Venta::create([
             'cliente_id' => $request->cliente_id,
             'fecha' => now(),
@@ -99,7 +102,7 @@ class VentaController extends Controller
             $producto->cantidad -= $detalle['cantidad'];
             $producto->save();
 
-            
+
         }
         return redirect()->route('ventas.index')->with('success', 'Venta registrada correctamente.');
     }
@@ -164,7 +167,7 @@ class VentaController extends Controller
                 'subtotal' => $subtotal,
             ]);
 
-            // Opcional: descontar inventario, si lo manejas
+            //descontar inventario, si lo manejas
             $producto->cantidad -= $cantidad;
             $producto->save();
         }
