@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Venta;
 use App\Models\Cliente;
 use App\Models\Producto;
+use App\Models\DetalleVenta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -58,59 +59,58 @@ class VentaController extends Controller
         $detalles = [];
 
         foreach ($request->productos as $item) {
-            $producto = Producto::find($item['producto_id']);
-
-            if (!$producto) {
-                return redirect()->back()->with('error', 'Producto no encontrado.');
-            }
+            $producto = Producto::findOrFail($item['producto_id']);
 
             if ($producto->cantidad < $item['cantidad']) {
-                return redirect()->back()->with('error', 'No hay suficiente stock para el producto: ' . $producto->nombre);
+                return redirect()->back()->with('error', "No hay suficiente stock para el producto: {$producto->nombre}");
             }
 
             $subtotal = $producto->precio * $item['cantidad'];
-            $total += $subtotal;
-
             $detalles[] = [
                 'producto_id' => $producto->id,
-                'nombre' => $producto->nombre,
                 'cantidad' => $item['cantidad'],
                 'precio_unitario' => $producto->precio,
                 'subtotal' => $subtotal,
             ];
+
+            $total += $subtotal;
         }
 
         if ($request->valor_pagado < $total) {
-            return redirect()->back()->with('error', 'El valor pagado no cubre el total de la venta.');
+            return back()->with('error', 'El valor pagado no cubre el total de la venta.');
         }
 
-        // Guardar venta
-        Venta::create([
+        $venta = Venta::create([
             'cliente_id' => $request->cliente_id,
             'fecha' => now(),
             'total' => $total,
-            'detalles_json' => $detalles,
+            'valor_pagado' => $request->valor_pagado,
+            'cambio' => $request->valor_pagado - $total,
         ]);
 
-        // Reducir stock
-        foreach ($request->productos as $item) {
-            $producto = Producto::find($item['producto_id']);
-            $producto->cantidad -= $item['cantidad'];
-            $producto->save();
-        }
+        // Guardar los detalles y actualizar stock
+        foreach ($detalles as $detalle) {
+            DetalleVenta::create([
+                'venta_id' => $venta->id,
+                ...$detalle
+            ]);
 
+            $producto = Producto::find($detalle['producto_id']);
+            $producto->cantidad -= $detalle['cantidad'];
+            $producto->save();
+
+            
+        }
         return redirect()->route('ventas.index')->with('success', 'Venta registrada correctamente.');
     }
-
-
-
 
     /**
      * Display the specified resource.
      */
     public function show(Venta $venta)
     {
-        //
+        return view('Ventas.VentasShow', compact('venta'));
+
     }
 
     /**
@@ -118,15 +118,70 @@ class VentaController extends Controller
      */
     public function edit(Venta $venta)
     {
-        //
+        return view('Ventas.VentasEdit', [
+            'venta' => $venta,
+            'clientes' => Cliente::all(),
+            'productos' => Producto::all()
+        ]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Venta $venta)
+    public function update(Request $request, $id)
     {
-        //
+        // Validación de datos
+        $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'productos' => 'required|array|min:1',
+            'productos.*.producto_id' => 'required|exists:productos,id',
+            'productos.*.cantidad' => 'required|integer|min:1',
+            'valor_pagado' => 'required|numeric|min:0',
+        ]);
+
+        $venta = Venta::findOrFail($id);
+
+        // Eliminar detalles anteriores
+        $venta->detalleVentas()->delete();
+
+        $total = 0;
+        $detalles = [];
+
+        // Recalcular total y crear nuevos detalles
+        foreach ($request->productos as $item) {
+            $producto = Producto::findOrFail($item['producto_id']);
+            $cantidad = $item['cantidad'];
+            $precio = $producto->precio;
+            $subtotal = $precio * $cantidad;
+
+            $total += $subtotal;
+
+            $detalles[] = new DetalleVenta([
+                'producto_id' => $producto->id,
+                'cantidad' => $cantidad,
+                'precio_unitario' => $precio,
+                'subtotal' => $subtotal,
+            ]);
+
+            // Opcional: descontar inventario, si lo manejas
+            $producto->cantidad -= $cantidad;
+            $producto->save();
+        }
+
+        // Actualizar venta
+        $venta->update([
+            'cliente_id' => $request->cliente_id,
+            'fecha' => now(),
+            'total' => $total,
+            'valor_pagado' => $request->valor_pagado,
+            'cambio' => $request->valor_pagado - $total,
+        ]);
+
+        // Guardar detalles nuevamente
+        $venta->detalleVentas()->saveMany($detalles);
+
+        return redirect()->route('ventas.index')->with('success', 'Venta actualizada correctamente.');
     }
 
     /**
@@ -134,6 +189,7 @@ class VentaController extends Controller
      */
     public function destroy(Venta $venta)
     {
-        //
+        $venta->delete();
+        return redirect()->route('ventas.index')->with('success','Venta eliminada correctamente.');
     }
 }

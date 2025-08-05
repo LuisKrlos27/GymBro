@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained('clientes');
             $table->timestamp('fecha')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->decimal('total', 10, 0);
+            $table->decimal('valor_pagado', 10, 0)->nullable();
+            $table->decimal('cambio', 10, 0)->nullable();
             $table->timestamps();
         });
     }

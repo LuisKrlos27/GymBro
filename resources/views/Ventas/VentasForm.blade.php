@@ -21,7 +21,7 @@
         </div>
     @endif
 
-    <form action="{{ route('ventas.store') }}" method="POST" class="grid grid-cols-1 gap-6">
+    <form action="{{ route('ventas.store') }}" method="POST" class="grid grid-cols-1 gap-6" oninput="calcularTotalYCambio()">
         @csrf
 
         <div>
@@ -38,17 +38,17 @@
         <div id="productos-container" class="space-y-4">
             <div class="producto-row border p-4 rounded-lg bg-base-200">
                 <label class="block font-semibold mb-1 text-gray-700">Producto</label>
-                <select name="productos[0][producto_id]" class="select select-bordered w-full" required>
+                <select name="productos[0][producto_id]" class="select select-bordered w-full producto-select" onchange="calcularTotalYCambio()" required>
                     <option value="">Seleccione producto</option>
                     @foreach ($producto as $pro)
-                        <option value="{{ $pro->id }}">
+                        <option value="{{ $pro->id }}" data-precio="{{ $pro->precio }}">
                             {{ $pro->nombre }} - ${{ number_format($pro->precio) }}
                         </option>
                     @endforeach
                 </select>
 
                 <label class="block font-semibold mt-4 mb-1 text-gray-700">Cantidad</label>
-                <input type="number" name="productos[0][cantidad]" class="input input-bordered w-full" min="1" required>
+                <input type="number" name="productos[0][cantidad]" class="input input-bordered w-full cantidad-input" min="1" value="1" required oninput="calcularTotalYCambio()">
             </div>
         </div>
 
@@ -58,7 +58,18 @@
 
         <div>
             <label for="valor_pagado" class="block font-semibold mb-1 text-gray-700">Valor pagado por el cliente</label>
-            <input type="number" name="valor_pagado" id="valor_pagado" class="input input-bordered w-full" min="0" required>
+            <input type="number" name="valor_pagado" id="valor_pagado" class="input input-bordered w-full" min="0" required oninput="calcularTotalYCambio()">
+        </div>
+
+        <!-- Mostrar total y cambio en tiempo real -->
+        <div>
+            <label class="block font-semibold text-gray-700 mb-1">Total a pagar</label>
+            <input type="text" id="total_mostrado" class="input input-bordered w-full" disabled>
+        </div>
+
+        <div>
+            <label class="block font-semibold text-gray-700 mb-1">Cambio</label>
+            <input type="text" id="cambio_mostrado" class="input input-bordered w-full" disabled>
         </div>
 
         <div class="flex justify-center pt-4">
@@ -78,17 +89,17 @@
 
         row.innerHTML = `
             <label class="block font-semibold mb-1 text-gray-700">Producto</label>
-            <select name="producto[${index}][producto_id]" class="select select-bordered w-full" required>
+            <select name="productos[${index}][producto_id]" class="select select-bordered w-full producto-select" onchange="calcularTotalYCambio()" required>
                 <option value="">Seleccione producto</option>
                 @foreach ($producto as $pro)
-                    <option value="{{ $pro->id }}">
+                    <option value="{{ $pro->id }}" data-precio="{{ $pro->precio }}">
                         {{ $pro->nombre }} - ${{ number_format($pro->precio) }}
                     </option>
                 @endforeach
             </select>
 
             <label class="block font-semibold mt-4 mb-1 text-gray-700">Cantidad</label>
-            <input type="number" name="productos[${index}][cantidad]" class="input input-bordered w-full" min="1" required>
+            <input type="number" name="productos[${index}][cantidad]" class="input input-bordered w-full cantidad-input" min="1" value="1" required oninput="calcularTotalYCambio()">
 
             <button type="button" onclick="eliminarProducto(this)" class="btn btn-error btn-sm mt-4 w-full md:w-auto">
                 Eliminar producto
@@ -103,7 +114,30 @@
         const row = button.closest('.producto-row');
         if (row) {
             row.remove();
+            calcularTotalYCambio();
         }
+    }
+
+    function calcularTotalYCambio() {
+        let total = 0;
+        const productos = document.querySelectorAll('.producto-row');
+
+        productos.forEach(row => {
+            const productoSelect = row.querySelector('.producto-select');
+            const cantidadInput = row.querySelector('.cantidad-input');
+
+            const selectedOption = productoSelect.options[productoSelect.selectedIndex];
+            const precio = selectedOption ? parseFloat(selectedOption.getAttribute('data-precio')) || 0 : 0;
+            const cantidad = parseInt(cantidadInput.value) || 0;
+
+            total += precio * cantidad;
+        });
+
+        const valorPagado = parseFloat(document.getElementById('valor_pagado').value) || 0;
+        const cambio = valorPagado - total;
+
+        document.getElementById('total_mostrado').value = `$${total.toLocaleString('es-CO')}`;
+        document.getElementById('cambio_mostrado').value = cambio >= 0 ? `$${cambio.toLocaleString('es-CO')}` : '---';
     }
 
     // Desvanecer alertas automáticamente
