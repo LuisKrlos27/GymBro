@@ -6,13 +6,11 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        {{-- Cliente --}}
         <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-600 mb-1">Cliente</label>
             <input type="text" class="input input-bordered w-full" value="{{ $venta->cliente->nombre }}" disabled>
         </div>
 
-        {{-- Productos --}}
         @foreach($venta->detalleVentas as $detalle)
             <div>
                 <label class="block text-sm font-semibold text-gray-600 mb-1">Producto</label>
@@ -25,8 +23,8 @@
             </div>
 
             <div>
-                <label class="block text-sm font-semibold text-gray-600 mb-1">Precio Unitario</label>
-                <input type="text" class="input input-bordered w-full" value="${{ number_format($detalle->precio_unitario, 0, ',', '.') }}" disabled>
+                <label class="block text-sm font-semibold text-gray-600 mb-1">Precio unitario</label>
+                <input type="text" class="input input-bordered w-full" value="${{ number_format($detalle->precio_unitario) }}" disabled>
             </div>
 
             <div>
@@ -35,31 +33,27 @@
             </div>
         @endforeach
 
-        {{-- Valor pagado --}}
-        <div>
-            <label class="block text-sm font-semibold text-gray-600 mb-1">Valor Pagado</label>
-            <input type="text" class="input input-bordered w-full" value="${{ number_format($venta->valor_pagado, 0, ',', '.') }}" disabled>
-        </div>
-
-        {{-- Cambio --}}
-        <div>
-            <label class="block text-sm font-semibold text-gray-600 mb-1">Cambio</label>
-            <input type="text" class="input input-bordered w-full" value="${{ number_format($venta->cambio, 0, ',', '.') }}" disabled>
-        </div>
-
-        {{-- Fecha de venta --}}
-        <div>
-            <label class="block text-sm font-semibold text-gray-600 mb-1">Fecha de venta</label>
-            <input type="text" class="input input-bordered w-full" value="{{ \Carbon\Carbon::parse($venta->fecha)->format('d/m/Y') }}" disabled>
-        </div>
-
-        {{-- Total --}}
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1">Total</label>
             <input type="text" class="input input-bordered w-full" value="${{ number_format($venta->total, 0, ',', '.') }}" disabled>
         </div>
 
-        {{-- Botón volver --}}
+        <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Valor pagado</label>
+            <input type="text" class="input input-bordered w-full" value="${{ number_format($venta->valor_pagado, 0, ',', '.') }}" disabled>
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Cambio</label>
+            <input type="text" class="input input-bordered w-full" value="${{ number_format($venta->cambio, 0, ',', '.') }}" disabled>
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Fecha de venta</label>
+            <input type="text" class="input input-bordered w-full" value="{{ \Carbon\Carbon::parse($venta->fecha)->format('d/m/Y') }}" disabled>
+        </div>
+
+
         <div class="md:col-span-2 flex justify-center pt-6">
             <a href="{{ route('ventas.index') }}" class="btn btn-primary px-8">Volver</a>
         </div>

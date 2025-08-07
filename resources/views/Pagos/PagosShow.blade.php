@@ -37,18 +37,18 @@
         </div>
 
         <div>
-            <label class="block text-sm font-semibold text-gray-600 mb-1">Valor Total</label>
-            <input type="number" class="input input-bordered w-full" value="{{ $pago->valor_total }}" disabled>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Valor total</label>
+            <input type="number" class="input input-bordered w-full" value="{{ number_format($pago->valor_total, 0, ',', '.') }}" disabled>
         </div>
 
         <div>
-            <label class="block text-sm font-semibold text-gray-600 mb-1">Valor Pagado</label>
-            <input type="number" class="input input-bordered w-full" value="{{ $pago->valor_pagado }}" disabled>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Valor pagado</label>
+            <input type="number" class="input input-bordered w-full" value="{{ number_format($pago->valor_pagado, 0, ',', '.') }}" disabled>
         </div>
 
         <div>
             <label class="block text-sm font-semibold text-gray-600 mb-1">Cambio</label>
-            <input type="number" class="input input-bordered w-full" value="{{ $pago->cambio }}" disabled>
+            <input type="number" class="input input-bordered w-full" value="{{ number_format($pago->cambio, 0, ',', '.') }}" disabled>
         </div>
 
         <div class="md:col-span-2 flex justify-center pt-6">

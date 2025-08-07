@@ -58,7 +58,7 @@
                                 <form action="{{ route('asistencias.destroy', $asi->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar esta asistencia?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-error" type="submit">Eliminar</button>
+                                    <button class="font-bold btn-sm btn btn-outline btn-error" type="submit">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
