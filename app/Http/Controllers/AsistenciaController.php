@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Cliente;
 use App\Models\Asistencia;
 use Illuminate\Http\Request;
@@ -79,7 +80,9 @@ class AsistenciaController extends Controller
      */
     public function edit(Asistencia $asistencia)
     {
-        //
+        $cliente = Cliente::all();
+        //dd($cliente,$asistencia);
+        return view('Asistencias.AsistenciasEdit', compact('asistencia','cliente'));
     }
 
     /**
@@ -87,7 +90,19 @@ class AsistenciaController extends Controller
      */
     public function update(Request $request, Asistencia $asistencia)
     {
-        //
+        $validated = $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+        ]);
+
+        // Forzamos que siempre se guarde la fecha y hora actuales
+        $validated['fecha_asistencia'] = Carbon::now();
+
+        $asistencia->update($validated);
+
+        // Redirige a la vista de asistencias con un mensaje de éxito
+        return redirect()->route('asistencias.index')->with('success', 'Asistencia actualizada correctamente.');
+
+
     }
 
     /**

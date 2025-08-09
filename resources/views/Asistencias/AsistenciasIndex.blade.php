@@ -55,11 +55,14 @@
                             <td>{{ $asi->cliente->nombre }}</td>
                             <td>{{ \Carbon\Carbon::parse($asi->fecha_asistencia)->format('d/m/Y H:i') }}</td>
                             <td class="flex flex-col sm:flex-row gap-1">
+                                <a href="{{ route('asistencias.edit', $asi->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
+                            {{--
                                 <form action="{{ route('asistencias.destroy', $asi->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar esta asistencia?')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="font-bold btn-sm btn btn-outline btn-error" type="submit">Eliminar</button>
                                 </form>
+                            --}}
                             </td>
                         </tr>
                     @endforeach
